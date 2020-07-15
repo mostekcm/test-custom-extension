@@ -1,0 +1,42 @@
+scenarios:
+  - name: "SAML Idp initialized login"
+    beforeScenario: ["init", "generateSamlResponse", "setIssuer"]
+    flow:
+      - post:
+          url: "/login/callback?connection={{$processEnvironment.CONNECTION}}"
+          form:
+            SAMLResponse: "{{samlResponse}}"
+            RelayState: "{{a0Client.relayState}}"
+          capture:
+            header: location
+            as: "applicationCallback"
+          followRedirect: false
+          expect:
+            - statusCode: 302
+      - get:
+          url: "{{applicationCallback}}"
+          capture:
+            - regexp: "iss=([^&]*)"
+              transform: "decodeURIComponent(this.iss)"
+              group: 1
+              as: "iss"
+            - regexp: "target_link_uri=([^&]*)"
+              transform: "decodeURIComponent(this.targetUri)"
+              group: 1
+              as: "targetUri"
+            - regexp: "(http[^?]*)"
+              transform: "decodeURIComponent(this.appLoginUrl)"
+              group: 1
+              as: "appLoginUrl"
+          followRedirect: false
+          expect:
+            - statusCode: 302
+            - equals:
+                - "{{iss}}"
+                - "{{issuer}}"
+            - equals:
+                - "{{targetUri}}"
+                - "{{a0Client.relayState}}"
+            - equals:
+                - "{{appLoginUrl}}"
+                - "{{$getLoginUrl()}}"

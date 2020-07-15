@@ -1,0 +1,11 @@
+.env
+whitelist.json
+relayStates.json
+private.key
+private.key
+certificate.crt
+cert.crt
+.npmrc
+letsencrypt
+*.log
+*.swp

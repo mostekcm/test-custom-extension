@@ -1,0 +1,30 @@
+{
+  "title": "Test Custom Extension",
+  "name": "test-custom",
+  "version": "1.0.0",
+  "author": "auth0",
+  "useHashName": false,
+  "description": "This is just a test for installing a custom extension.",
+  "type": "application",
+  "category": "end_user",
+  "logoUrl": "https://res-1.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1397191966/68aa3a98f81f5e09a3afb00a73461434.png",
+  "initialUrlPath": "/",
+  "docsUrl": "https://auth0.com/docs",
+  "codeUrl": "https://raw.githubusercontent.com/mostekcm/test-custom-extension/master/build/bundle.js",
+  "repository": "https://github.com/mostekcm/test-custom-extension",
+  "keywords": ["auth0", "extension"],
+  "auth0": {
+    "createClient": true,
+    "onUninstallPath": "/.extensions/on-uninstall",
+    "onInstallPath": "/.extensions/on-install",
+    "onUpdatePath": "/.extensions/on-update",
+    "scopes": "create:clients read:clients update:clients delete:clients create:resource_servers read:resource_servers update:resource_servers delete:resource_servers read:connections create:client_grants read:client_grants create:rules read:rules delete:rules read:tenant_settings"
+  },
+  "secrets": {
+    "DATADOG_API_KEY": {
+      "description": "The API key for sending logs to DataDog over HTTPs",
+      "required": true,
+      "type": "password"
+    }
+  }
+}
